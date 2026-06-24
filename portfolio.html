@@ -20,9 +20,11 @@
       flex-direction: column;
       align-items: center;
     }
+
+    /* NAV */
     nav {
       width: 100%;
-      padding: 28px 48px;
+      padding: 22px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -35,18 +37,18 @@
       letter-spacing: 2px;
       opacity: 0.5;
     }
-    .nav-links { display: flex; gap: 10px; }
+    .nav-links { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
     .nav-links a {
       font-family: var(--pixel);
-      font-size: 8px;
+      font-size: 7px;
       text-decoration: none;
       letter-spacing: 1px;
-      padding: 9px 16px;
+      padding: 8px 14px;
       border-radius: 999px;
       color: #f0ece8;
-      background: transparent;
       border: 1px solid #333;
       transition: all 0.15s;
+      white-space: nowrap;
     }
     .nav-links a:hover { border-color: #666; }
     .nav-links a.active-home { background: var(--pink); color: #fff; border-color: var(--pink); }
@@ -54,112 +56,97 @@
     .nav-links a.active-about { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
     .nav-links a.active-contact { background: var(--rose); color: #1a1a1a; border-color: var(--rose); }
 
+    /* PANEL */
     .page-panel {
       background: var(--panel);
       border-radius: 6px;
       width: min(92vw, 960px);
       margin-bottom: 40px;
       overflow: hidden;
-      /* TWO COLUMN layout like Carlos Arcilla */
       display: flex;
-      min-height: 560px;
+      min-height: 520px;
     }
 
-    /* LEFT: huge name */
+    /* LEFT column */
     .panel-left {
-      flex: 0 0 auto;
-      width: 42%;
-      padding: 52px 40px 52px 52px;
+      flex: 0 0 38%;
+      padding: 48px 32px 48px 48px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
+    /* Big name: sized so "COLLECTION" fits on one line within the column */
     .big-name {
       font-family: var(--pixel);
-      font-size: clamp(32px, 5.5vw, 64px);
-      line-height: 1.0;
+      /* 38% of min(92vw,960px) minus padding = ~320px at desktop.
+         "COLLECTION" in Press Start 2P is ~10 chars × ~0.65em wide each.
+         At 28px that's ~182px. Safe. Use clamp so it grows but never breaks. */
+      font-size: clamp(18px, 3vw, 32px);
+      line-height: 1.15;
       color: #1a1a1a;
-      letter-spacing: -1px;
-      word-break: break-word;
+      letter-spacing: 0px;
+      white-space: nowrap;  /* never wrap mid-word */
     }
 
-    .panel-left-bottom {
-      margin-top: 32px;
-    }
+    .panel-left-bottom { margin-top: 28px; }
 
     .page-tag {
       font-family: var(--pixel);
-      font-size: 8px;
+      font-size: 7px;
       color: var(--gold);
       letter-spacing: 2px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     h1 {
       font-family: var(--pixel);
-      font-size: clamp(9px, 1.2vw, 12px);
-      line-height: 1.9;
-      color: #4a4240;
+      font-size: clamp(8px, 1vw, 11px);
+      line-height: 2;
+      color: #5a5250;
     }
 
-    /* RIGHT: vinyl stack */
+    /* RIGHT column */
     .panel-right {
       flex: 1;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 48px 80px 20px;
+      padding: 40px 44px 88px 16px;
       border-left: 1px solid #e0d8d0;
     }
 
     .vinyl-stage {
       position: relative;
       width: 100%;
-      max-width: 340px;
-      height: 420px;
+      max-width: 320px;
+      height: 400px;
       display: flex;
       align-items: flex-start;
       justify-content: center;
     }
 
-    .vinyl-stack { position: relative; width: 300px; height: 300px; }
+    .vinyl-stack { position: relative; width: 280px; height: 280px; }
 
     .vinyl-card {
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
-      cursor: pointer;
+      position: absolute; inset: 0;
+      border-radius: 6px; cursor: pointer;
       transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
-      will-change: transform, opacity;
       overflow: hidden;
     }
     .vinyl-card .card-inner {
-      width: 100%; height: 100%;
-      position: relative;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 24px;
+      width: 100%; height: 100%; position: relative;
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 22px;
     }
     .vinyl-card .card-bg { position: absolute; inset: 0; z-index: 0; }
     .vinyl-card .card-content { position: relative; z-index: 1; }
 
-    .card-num {
-      font-family: var(--pixel); font-size: 7px;
-      letter-spacing: 2px; margin-bottom: 8px; opacity: 0.7;
-    }
-    .card-title {
-      font-family: var(--pixel);
-      font-size: clamp(10px, 1.5vw, 13px);
-      line-height: 1.5; margin-bottom: 8px;
-    }
-    .card-desc {
-      font-size: 12px; line-height: 1.6;
-      opacity: 0.75; font-weight: 300; margin-bottom: 14px;
-    }
+    .card-num { font-family: var(--pixel); font-size: 7px; letter-spacing: 2px; margin-bottom: 8px; opacity: 0.7; }
+    .card-title { font-family: var(--pixel); font-size: 12px; line-height: 1.5; margin-bottom: 8px; }
+    .card-desc { font-size: 12px; line-height: 1.6; opacity: 0.75; font-weight: 300; margin-bottom: 14px; }
     .card-link {
-      font-family: var(--pixel); font-size: 7px;
-      letter-spacing: 2px; text-decoration: none;
-      padding: 7px 12px; border: 1px solid currentColor;
+      font-family: var(--pixel); font-size: 7px; letter-spacing: 2px;
+      text-decoration: none; padding: 7px 12px; border: 1px solid currentColor;
       display: inline-block; transition: all 0.15s;
     }
     .card-link:hover { background: currentColor; color: var(--dark); }
@@ -190,44 +177,67 @@
     .vinyl-card[data-pos="3"] { transform: translate(30px,30px) rotate(7deg); z-index: 1; opacity: 0.45; }
 
     .vinyl-disc {
-      position: absolute; top: 16px; right: 16px;
-      width: 60px; height: 60px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.08);
+      position: absolute; top: 14px; right: 14px; width: 56px; height: 56px;
+      border-radius: 50%; border: 2px solid rgba(255,255,255,0.08);
       animation: spin 8s linear infinite; pointer-events: none;
     }
-    .vinyl-disc::before { content: ''; position: absolute; inset: 8px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.06); }
-    .vinyl-disc::after { content: ''; position: absolute; inset: 24px; border-radius: 50%; background: rgba(255,255,255,0.05); }
-    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .vinyl-disc::before { content:''; position:absolute; inset:8px; border-radius:50%; border:1px solid rgba(255,255,255,0.06); }
+    .vinyl-disc::after { content:''; position:absolute; inset:22px; border-radius:50%; background:rgba(255,255,255,0.05); }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .vinyl-controls {
-      position: absolute; bottom: 20px; left: 0; right: 0;
-      display: flex; align-items: center; justify-content: center; gap: 16px;
+      position: absolute; bottom: 16px; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
     }
     .ctrl-btn {
-      font-family: var(--pixel); font-size: 7px;
-      color: #f0ece8; background: none;
-      border: 1px solid #555; padding: 8px 12px;
-      cursor: pointer; letter-spacing: 1px;
-      border-radius: 4px; transition: all 0.15s;
+      font-family: var(--pixel); font-size: 7px; color: #888; background: none;
+      border: 1px solid #444; padding: 8px 12px; cursor: pointer;
+      border-radius: 4px; transition: all 0.15s; letter-spacing: 1px;
     }
     .ctrl-btn:hover { border-color: var(--pink); color: var(--pink); }
-    .ctrl-dots { display: flex; gap: 8px; }
-    .ctrl-dot {
-      width: 6px; height: 6px; background: #888;
-      border-radius: 50%; cursor: pointer; transition: background 0.2s;
-    }
+    .ctrl-dots { display: flex; gap: 7px; }
+    .ctrl-dot { width: 6px; height: 6px; background: #666; border-radius: 50%; cursor: pointer; transition: background 0.2s; }
     .ctrl-dot.active { background: var(--pink); }
 
-    @media (max-width: 700px) {
-      .page-panel { flex-direction: column; }
-      .panel-left { width: 100%; padding: 36px 28px 24px; }
-      .panel-right { padding: 24px 28px 80px; border-left: none; border-top: 1px solid #e0d8d0; }
-      nav { padding: 20px 20px; }
-      .nav-links a { padding: 8px 10px; font-size: 7px; }
+    /* ===================== MOBILE ===================== */
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links a { padding: 7px 10px; font-size: 6px; }
+
+      .page-panel {
+        flex-direction: column;
+        min-height: unset;
+        width: 92vw;
+      }
+
+      .panel-left {
+        flex: none;
+        width: 100%;
+        padding: 32px 28px 24px;
+      }
+
+      /* On mobile: let the name wrap naturally at a safe size */
+      .big-name {
+        font-size: 22px;
+        white-space: normal;
+        word-break: keep-all; /* break between words only, not mid-word */
+      }
+
+      .panel-right {
+        flex: none;
+        border-left: none;
+        border-top: 1px solid #e0d8d0;
+        padding: 32px 20px 88px;
+        min-height: 380px;
+      }
+
+      .vinyl-stage { max-width: 100%; height: 360px; }
+      .vinyl-stack { width: 240px; height: 240px; }
     }
   </style>
 </head>
 <body>
+
 <nav>
   <a class="nav-logo" href="index.html">NS</a>
   <div class="nav-links">
@@ -240,7 +250,6 @@
 
 <div class="page-panel">
 
-  <!-- LEFT: big name -->
   <div class="panel-left">
     <div class="big-name">THE<br>COLLECTION</div>
     <div class="panel-left-bottom">
@@ -249,7 +258,6 @@
     </div>
   </div>
 
-  <!-- RIGHT: stack -->
   <div class="panel-right">
     <div class="vinyl-stage">
       <div class="vinyl-stack" id="stack">
@@ -261,7 +269,7 @@
             <div class="card-content">
               <div class="card-num">01 / BRAND + WEB</div>
               <div class="card-title">ROCKETS.JO</div>
-              <div class="card-desc">Thrifted sneaker brand delivering pre-loved kicks across Jordan. Deep burgundy identity, Instagram-first business.</div>
+              <div class="card-desc">Thrifted sneaker brand delivering pre-loved kicks across Jordan. Deep burgundy identity, Instagram-first.</div>
               <a href="https://rockets.jo" target="_blank" class="card-link">VISIT SITE →</a>
             </div>
           </div>
@@ -285,7 +293,7 @@
             <div class="card-content">
               <div class="card-num">03 / BRAND + WEB</div>
               <div class="card-title">WARSHA STUDIO</div>
-              <div class="card-desc">Creative workshops in Amman hosting craft sessions across venues and cafes. Branding and web presence.</div>
+              <div class="card-desc">Creative workshops in Amman hosting craft sessions across venues and cafes. Branding and web.</div>
               <a href="https://warshastudio.online" target="_blank" class="card-link">VISIT SITE →</a>
             </div>
           </div>
@@ -326,7 +334,7 @@
   const cards = Array.from(document.querySelectorAll('.vinyl-card'));
   const dots = Array.from(document.querySelectorAll('.ctrl-dot'));
   function updatePositions() {
-    cards.forEach((card, i) => card.setAttribute('data-pos', (i - current + total) % total));
+    cards.forEach((c, i) => c.setAttribute('data-pos', (i - current + total) % total));
     dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
   function cycleStack() { current = (current + 1) % total; updatePositions(); }

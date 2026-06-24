@@ -103,11 +103,13 @@
       gap: 14px;
       margin-bottom: 52px;
     }
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       .links-grid { grid-template-columns: 1fr; }
-      nav { padding: 20px 20px; }
-      .page-panel { padding: 40px 28px 56px; }
-      .nav-links a { padding: 8px 10px; font-size: 7px; }
+      nav { padding: 16px 20px; }
+      .nav-links { gap: 6px; flex-wrap: wrap; }
+      .nav-links a { padding: 7px 10px; font-size: 6px; }
+      .page-panel { padding: 36px 24px 48px; width: 92vw; }
+      h1 { font-size: 13px; }
     }
 
     .link-card {
