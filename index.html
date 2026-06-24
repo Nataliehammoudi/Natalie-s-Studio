@@ -88,7 +88,7 @@
       100% { transform: translateY(-5px); }
     }
 
-    /* OUTER SHELL - dark page with centered title */
+    /* OUTER SHELL */
     #page-shell {
       display: none;
       flex-direction: column;
@@ -98,32 +98,50 @@
       background: #0a0a0a;
     }
 
-    .page-title {
+    .site-nav {
+      width: 100%;
+      padding: 24px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .nav-logo {
       font-family: var(--pixel);
-      font-size: clamp(18px, 3vw, 28px);
+      font-size: 9px;
       color: #f0ece8;
-      text-align: center;
-      padding: 32px 20px 20px;
+      text-decoration: none;
       letter-spacing: 2px;
-      line-height: 1.6;
+      opacity: 0.5;
     }
 
-    .page-subtitle {
+    .nav-pill-group { display: flex; gap: 10px; }
+
+    .nav-pill {
       font-family: var(--pixel);
-      font-size: clamp(7px, 1vw, 9px);
-      color: #666;
-      text-align: center;
+      font-size: 8px;
+      text-decoration: none;
       letter-spacing: 1px;
-      padding-bottom: 16px;
+      padding: 9px 16px;
+      border-radius: 999px;
+      color: #f0ece8;
+      background: transparent;
+      border: 1px solid #333;
+      transition: all 0.15s;
     }
+    .nav-pill:hover { border-color: #666; }
+    .nav-pill.active-about { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
+    .nav-pill.active-portfolio { background: var(--violet); color: #fff; border-color: var(--violet); }
+    .nav-pill.active-contact { background: var(--rose); color: #1a1a1a; border-color: var(--rose); }
 
-    /* GAME PANEL - white/light inner screen like the reference */
+    /* GAME PANEL */
     #game-panel {
       background: #f0ece8;
-      border-radius: 4px;
+      border-radius: 6px;
       width: min(90vw, 900px);
       flex: 1;
-      max-height: calc(100vh - 160px);
+      max-height: calc(100vh - 110px);
       position: relative;
       overflow: hidden;
       cursor: crosshair;
@@ -365,12 +383,20 @@
 
 <!-- PAGE SHELL -->
 <div id="page-shell">
-  <div class="page-title">NATALIE'S STUDIO</div>
-  <div class="page-subtitle">side quests, main quests and a few cool projects</div>
+  <nav class="site-nav">
+    <span class="nav-logo">NS</span>
+    <div class="nav-pill-group">
+      <a href="about.html" class="nav-pill">ABOUT</a>
+      <a href="portfolio.html" class="nav-pill">PORTFOLIO</a>
+      <a href="contact.html" class="nav-pill">CONTACT</a>
+    </div>
+  </nav>
 
   <!-- GAME PANEL -->
   <div id="game-panel">
     <div id="game-world">
+      <!-- BIG WATERMARK NAME -->
+      <div style="position:absolute;bottom:90px;left:28px;font-family:'Press Start 2P',monospace;font-size:clamp(36px,7vw,72px);line-height:0.88;color:#e0d8d2;letter-spacing:-2px;pointer-events:none;user-select:none;z-index:1;">NATALIE<br>STUDIO</div>
 
       <!-- FOLDERS -->
       <div class="folder folder-about" id="folder-about" onclick="openPage('about.html')">

@@ -6,66 +6,73 @@
   <title>Portfolio — Natalie's Studio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap');
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --black: #0a0a0a;
-      --pink: #e879a0;
-      --rose: #f4a0bc;
-      --gold: #d4a843;
-      --violet: #9b6fd4;
-      --white: #f0ece8;
-      --pixel: 'Press Start 2P', monospace;
-      --body: 'Inter', sans-serif;
+      --pink: #e879a0; --rose: #f4a0bc; --gold: #d4a843; --violet: #9b6fd4;
+      --panel: #f0ece8; --dark: #0a0a0a;
+      --pixel: 'Press Start 2P', monospace; --body: 'Inter', sans-serif;
     }
-
     body {
-      background: var(--black);
-      color: var(--white);
+      background: var(--dark);
+      color: var(--dark);
       font-family: var(--body);
       min-height: 100vh;
-      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
     nav {
-      padding: 24px 48px;
+      width: 100%;
+      padding: 28px 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #1e1e1e;
     }
-
-    .nav-home {
+    .nav-logo {
       font-family: var(--pixel);
       font-size: 9px;
-      color: var(--rose);
+      color: #f0ece8;
       text-decoration: none;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
+      opacity: 0.5;
     }
-
-    .nav-home:hover { color: var(--pink); }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
-
+    .nav-links { display: flex; gap: 10px; }
     .nav-links a {
       font-family: var(--pixel);
       font-size: 8px;
-      color: #555;
       text-decoration: none;
       letter-spacing: 1px;
-      transition: color 0.2s;
+      padding: 9px 16px;
+      border-radius: 999px;
+      color: #f0ece8;
+      background: transparent;
+      border: 1px solid #333;
+      transition: all 0.15s;
+    }
+    .nav-links a:hover { border-color: #666; }
+    .nav-links a.active-home { background: var(--pink); color: #fff; border-color: var(--pink); }
+    .nav-links a.active-portfolio { background: var(--violet); color: #fff; border-color: var(--violet); }
+    .nav-links a.active-about { background: var(--gold); color: #1a1a1a; border-color: var(--gold); }
+    .nav-links a.active-contact { background: var(--rose); color: #1a1a1a; border-color: var(--rose); }
+
+    .page-panel {
+      background: var(--panel);
+      border-radius: 6px;
+      width: min(92vw, 920px);
+      padding: 64px 60px 72px;
+      margin-bottom: 40px;
+      overflow: hidden;
     }
 
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
-
-    .page-header {
-      padding: 64px 48px 48px;
-      max-width: 900px;
-      margin: 0 auto;
+    .big-name {
+      font-family: var(--pixel);
+      font-size: clamp(44px, 9vw, 88px);
+      line-height: 0.9;
+      color: #e0d8d2;
+      letter-spacing: -2px;
+      margin-bottom: 48px;
+      word-break: break-all;
+      user-select: none;
     }
 
     .page-tag {
@@ -75,40 +82,33 @@
       letter-spacing: 3px;
       margin-bottom: 20px;
     }
-
     h1 {
       font-family: var(--pixel);
-      font-size: clamp(14px, 2.5vw, 22px);
-      line-height: 1.6;
-      color: var(--white);
+      font-size: clamp(12px, 1.8vw, 16px);
+      line-height: 1.8;
+      color: #1a1a1a;
+      margin-bottom: 52px;
     }
 
     /* VINYL STACK */
     .vinyl-stage {
       position: relative;
-      height: 520px;
+      height: 480px;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      margin: 0 0 80px;
+      margin-bottom: 60px;
     }
-
-    .vinyl-stack {
-      position: relative;
-      width: 380px;
-      height: 380px;
-    }
-
+    .vinyl-stack { position: relative; width: 360px; height: 360px; }
     .vinyl-card {
       position: absolute;
       inset: 0;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1);
       will-change: transform, opacity;
       overflow: hidden;
     }
-
     .vinyl-card .card-inner {
       width: 100%;
       height: 100%;
@@ -118,33 +118,22 @@
       justify-content: flex-end;
       padding: 28px;
     }
-
-    .vinyl-card .card-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .vinyl-card .card-content {
-      position: relative;
-      z-index: 1;
-    }
+    .vinyl-card .card-bg { position: absolute; inset: 0; z-index: 0; }
+    .vinyl-card .card-content { position: relative; z-index: 1; }
 
     .card-num {
       font-family: var(--pixel);
-      font-size: 8px;
+      font-size: 7px;
       letter-spacing: 2px;
       margin-bottom: 10px;
-      opacity: 0.6;
+      opacity: 0.7;
     }
-
     .card-title {
       font-family: var(--pixel);
-      font-size: clamp(12px, 2vw, 16px);
+      font-size: clamp(11px, 1.8vw, 15px);
       line-height: 1.5;
       margin-bottom: 8px;
     }
-
     .card-desc {
       font-size: 13px;
       line-height: 1.6;
@@ -152,7 +141,6 @@
       font-weight: 300;
       margin-bottom: 16px;
     }
-
     .card-link {
       font-family: var(--pixel);
       font-size: 7px;
@@ -163,220 +151,155 @@
       display: inline-block;
       transition: all 0.15s;
     }
+    .card-link:hover { background: currentColor; color: var(--dark); }
 
-    .card-link:hover {
-      background: currentColor;
-      color: var(--black);
-    }
-
-    /* card themes */
     .card-0 { background: #1a0a10; }
     .card-0 .card-bg { background: radial-gradient(ellipse at top right, #3d1020 0%, #1a0a10 60%); }
     .card-0 .card-num, .card-0 .card-link { color: var(--pink); }
-    .card-0 .card-title { color: var(--white); }
+    .card-0 .card-title, .card-0 .card-desc { color: #f0ece8; }
 
     .card-1 { background: #0e0a1a; }
     .card-1 .card-bg { background: radial-gradient(ellipse at bottom left, #251040 0%, #0e0a1a 60%); }
     .card-1 .card-num, .card-1 .card-link { color: var(--violet); }
-    .card-1 .card-title { color: var(--white); }
+    .card-1 .card-title, .card-1 .card-desc { color: #f0ece8; }
 
     .card-2 { background: #12100a; }
     .card-2 .card-bg { background: radial-gradient(ellipse at top left, #2e2000 0%, #12100a 60%); }
     .card-2 .card-num, .card-2 .card-link { color: var(--gold); }
-    .card-2 .card-title { color: var(--white); }
+    .card-2 .card-title, .card-2 .card-desc { color: #f0ece8; }
 
     .card-3 { background: #0d0e18; }
     .card-3 .card-bg { background: radial-gradient(ellipse at bottom right, #1a1a3a 0%, #0d0e18 60%); }
     .card-3 .card-num, .card-3 .card-link { color: var(--rose); }
-    .card-3 .card-title { color: var(--white); }
+    .card-3 .card-title, .card-3 .card-desc { color: #f0ece8; }
 
-    /* stacked positions */
-    .vinyl-card[data-pos="0"] {
-      transform: translate(0, 0) rotate(0deg);
-      z-index: 4;
-      box-shadow: 0 24px 60px rgba(232, 121, 160, 0.15);
-    }
+    .vinyl-card[data-pos="0"] { transform: translate(0,0) rotate(0deg); z-index: 4; box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+    .vinyl-card[data-pos="1"] { transform: translate(12px,12px) rotate(3deg); z-index: 3; opacity: 0.85; }
+    .vinyl-card[data-pos="2"] { transform: translate(24px,24px) rotate(5deg); z-index: 2; opacity: 0.65; }
+    .vinyl-card[data-pos="3"] { transform: translate(36px,36px) rotate(7deg); z-index: 1; opacity: 0.45; }
 
-    .vinyl-card[data-pos="1"] {
-      transform: translate(14px, 14px) rotate(3deg);
-      z-index: 3;
-      opacity: 0.85;
-    }
-
-    .vinyl-card[data-pos="2"] {
-      transform: translate(28px, 28px) rotate(5deg);
-      z-index: 2;
-      opacity: 0.65;
-    }
-
-    .vinyl-card[data-pos="3"] {
-      transform: translate(42px, 42px) rotate(7deg);
-      z-index: 1;
-      opacity: 0.45;
-    }
-
-    /* controls */
-    .vinyl-controls {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .ctrl-btn {
-      font-family: var(--pixel);
-      font-size: 8px;
-      color: var(--white);
-      background: none;
-      border: 1px solid #333;
-      padding: 10px 16px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: all 0.15s;
-    }
-
-    .ctrl-btn:hover { border-color: var(--pink); color: var(--pink); }
-
-    .ctrl-dots {
-      display: flex;
-      gap: 8px;
-    }
-
-    .ctrl-dot {
-      width: 6px;
-      height: 6px;
-      background: #333;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .ctrl-dot.active { background: var(--pink); }
-
-    /* decorative vinyl circle on active card */
     .vinyl-disc {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 80px;
-      height: 80px;
+      position: absolute; top: 20px; right: 20px;
+      width: 72px; height: 72px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.08);
       animation: spin 8s linear infinite;
       pointer-events: none;
     }
-
     .vinyl-disc::before {
-      content: '';
-      position: absolute;
-      inset: 10px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.06);
+      content: ''; position: absolute; inset: 10px;
+      border-radius: 50%; border: 1px solid rgba(255,255,255,0.06);
     }
-
     .vinyl-disc::after {
-      content: '';
-      position: absolute;
-      inset: 35px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.05);
+      content: ''; position: absolute; inset: 30px;
+      border-radius: 50%; background: rgba(255,255,255,0.05);
     }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    .vinyl-controls {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      display: flex; align-items: center; gap: 16px;
     }
+    .ctrl-btn {
+      font-family: var(--pixel); font-size: 7px;
+      color: #f0ece8; background: none;
+      border: 1px solid #333; padding: 9px 14px;
+      cursor: pointer; letter-spacing: 1px;
+      border-radius: 4px; transition: all 0.15s;
+    }
+    .ctrl-btn:hover { border-color: var(--pink); color: var(--pink); }
+    .ctrl-dots { display: flex; gap: 8px; }
+    .ctrl-dot {
+      width: 6px; height: 6px;
+      background: #444; border-radius: 50%;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .ctrl-dot.active { background: var(--pink); }
 
     @media (max-width: 640px) {
-      nav { padding: 20px 24px; }
-      .page-header { padding: 40px 24px 32px; }
-      .vinyl-stack { width: 300px; height: 300px; }
-      .vinyl-stage { height: 440px; }
+      nav { padding: 20px 20px; }
+      .page-panel { padding: 40px 28px 56px; }
+      .nav-links a { padding: 8px 10px; font-size: 7px; }
+      .vinyl-stack { width: 280px; height: 280px; }
+      .vinyl-stage { height: 380px; }
     }
   </style>
 </head>
 <body>
-
 <nav>
-  <a class="nav-home" href="index.html">← HOME</a>
+  <a class="nav-logo" href="index.html">NS</a>
   <div class="nav-links">
+    <a href="index.html" class="active-home">HOME</a>
     <a href="about.html">ABOUT</a>
-    <a href="portfolio.html" class="active">PORTFOLIO</a>
+    <a href="portfolio.html" class="active-portfolio">PORTFOLIO</a>
     <a href="contact.html">CONTACT</a>
   </div>
 </nav>
 
-<div class="page-header">
+<div class="page-panel">
+  <div class="big-name">THE<br>COLLECTION</div>
   <div class="page-tag">// THE COLLECTION</div>
   <h1>Click through the stack.</h1>
-</div>
 
-<div class="vinyl-stage">
-  <div class="vinyl-stack" id="stack">
-
-    <div class="vinyl-card card-0" data-pos="0" data-index="0" onclick="cycleStack()">
-      <div class="card-inner">
-        <div class="card-bg"></div>
-        <div class="vinyl-disc"></div>
-        <div class="card-content">
-          <div class="card-num">01 / BRAND + WEB</div>
-          <div class="card-title">ROCKETS.JO</div>
-          <div class="card-desc">Thrifted sneaker brand delivering pre-loved kicks across Jordan. Deep burgundy identity, Instagram-first business.</div>
-          <a href="https://rockets.jo" target="_blank" class="card-link">VISIT SITE →</a>
+  <div class="vinyl-stage">
+    <div class="vinyl-stack" id="stack">
+      <div class="vinyl-card card-0" data-pos="0" data-index="0" onclick="cycleStack()">
+        <div class="card-inner">
+          <div class="card-bg"></div>
+          <div class="vinyl-disc"></div>
+          <div class="card-content">
+            <div class="card-num">01 / BRAND + WEB</div>
+            <div class="card-title">ROCKETS.JO</div>
+            <div class="card-desc">Thrifted sneaker brand delivering pre-loved kicks across Jordan. Deep burgundy identity, Instagram-first business.</div>
+            <a href="https://rockets.jo" target="_blank" class="card-link">VISIT SITE →</a>
+          </div>
+        </div>
+      </div>
+      <div class="vinyl-card card-1" data-pos="1" data-index="1" onclick="cycleStack()">
+        <div class="card-inner">
+          <div class="card-bg"></div>
+          <div class="card-content">
+            <div class="card-num">02 / BRAND + WEB</div>
+            <div class="card-title">CHARMLY.JO</div>
+            <div class="card-desc">Charm bracelet and jewelry brand with a full multi-page site. Pink, rose, gold, and violet palette with hand-drawn character.</div>
+            <a href="https://charmly.jo" target="_blank" class="card-link">VISIT SITE →</a>
+          </div>
+        </div>
+      </div>
+      <div class="vinyl-card card-2" data-pos="2" data-index="2" onclick="cycleStack()">
+        <div class="card-inner">
+          <div class="card-bg"></div>
+          <div class="card-content">
+            <div class="card-num">03 / BRAND + WEB</div>
+            <div class="card-title">WARSHA STUDIO</div>
+            <div class="card-desc">Creative workshops business in Amman hosting craft sessions across venues and cafes. Branding and web presence.</div>
+            <a href="https://warshastudio.online" target="_blank" class="card-link">VISIT SITE →</a>
+          </div>
+        </div>
+      </div>
+      <div class="vinyl-card card-3" data-pos="3" data-index="3" onclick="cycleStack()">
+        <div class="card-inner">
+          <div class="card-bg"></div>
+          <div class="card-content">
+            <div class="card-num">04 / COMING SOON</div>
+            <div class="card-title">NEXT PROJECT</div>
+            <div class="card-desc">Something new is in the works. Reach out if you want to be part of it.</div>
+            <a href="contact.html" class="card-link">LET'S TALK →</a>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="vinyl-card card-1" data-pos="1" data-index="1" onclick="cycleStack()">
-      <div class="card-inner">
-        <div class="card-bg"></div>
-        <div class="card-content">
-          <div class="card-num">02 / BRAND + WEB</div>
-          <div class="card-title">CHARMLY.JO</div>
-          <div class="card-desc">Charm bracelet and jewelry brand with a full multi-page site. Pink, rose, gold, and violet palette with hand-drawn character.</div>
-          <a href="https://charmly.jo" target="_blank" class="card-link">VISIT SITE →</a>
-        </div>
+    <div class="vinyl-controls">
+      <button class="ctrl-btn" onclick="cycleBack()">← PREV</button>
+      <div class="ctrl-dots" id="dots">
+        <div class="ctrl-dot active" onclick="goTo(0)"></div>
+        <div class="ctrl-dot" onclick="goTo(1)"></div>
+        <div class="ctrl-dot" onclick="goTo(2)"></div>
+        <div class="ctrl-dot" onclick="goTo(3)"></div>
       </div>
+      <button class="ctrl-btn" onclick="cycleStack()">NEXT →</button>
     </div>
-
-    <div class="vinyl-card card-2" data-pos="2" data-index="2" onclick="cycleStack()">
-      <div class="card-inner">
-        <div class="card-bg"></div>
-        <div class="card-content">
-          <div class="card-num">03 / BRAND + WEB</div>
-          <div class="card-title">WARSHA STUDIO</div>
-          <div class="card-desc">Creative workshops business in Amman hosting craft sessions across venues and cafes. Branding and web presence.</div>
-          <a href="https://warshastudio.online" target="_blank" class="card-link">VISIT SITE →</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="vinyl-card card-3" data-pos="3" data-index="3" onclick="cycleStack()">
-      <div class="card-inner">
-        <div class="card-bg"></div>
-        <div class="card-content">
-          <div class="card-num">04 / COMING SOON</div>
-          <div class="card-title">NEXT PROJECT</div>
-          <div class="card-desc">Something new is in the works. Reach out if you want to be part of it.</div>
-          <a href="contact.html" class="card-link">LET'S TALK →</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="vinyl-controls">
-    <button class="ctrl-btn" onclick="cycleBack()">← PREV</button>
-    <div class="ctrl-dots" id="dots">
-      <div class="ctrl-dot active" onclick="goTo(0)"></div>
-      <div class="ctrl-dot" onclick="goTo(1)"></div>
-      <div class="ctrl-dot" onclick="goTo(2)"></div>
-      <div class="ctrl-dot" onclick="goTo(3)"></div>
-    </div>
-    <button class="ctrl-btn" onclick="cycleStack()">NEXT →</button>
   </div>
 </div>
 
@@ -385,33 +308,15 @@
   const total = 4;
   const cards = Array.from(document.querySelectorAll('.vinyl-card'));
   const dots = Array.from(document.querySelectorAll('.ctrl-dot'));
-
   function updatePositions() {
     cards.forEach((card, i) => {
-      const pos = (i - current + total) % total;
-      card.setAttribute('data-pos', pos);
-      // only top card is clickable via onclick, others via goTo
+      card.setAttribute('data-pos', (i - current + total) % total);
     });
-    dots.forEach((d, i) => {
-      d.classList.toggle('active', i === current);
-    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
   }
-
-  function cycleStack() {
-    current = (current + 1) % total;
-    updatePositions();
-  }
-
-  function cycleBack() {
-    current = (current - 1 + total) % total;
-    updatePositions();
-  }
-
-  function goTo(index) {
-    current = index;
-    updatePositions();
-  }
+  function cycleStack() { current = (current + 1) % total; updatePositions(); }
+  function cycleBack() { current = (current - 1 + total) % total; updatePositions(); }
+  function goTo(i) { current = i; updatePositions(); }
 </script>
-
 </body>
 </html>
