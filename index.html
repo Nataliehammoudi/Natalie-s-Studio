@@ -21,8 +21,8 @@
     }
 
     body {
-      background: var(--black);
-      color: var(--white);
+      background: #c8c8c8;
+      color: #1a1a1a;
       font-family: var(--body);
       overflow: hidden;
       height: 100vh;
@@ -33,7 +33,7 @@
     #loading-screen {
       position: fixed;
       inset: 0;
-      background: var(--black);
+      background: #c8c8c8;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -45,7 +45,7 @@
     #loading-screen h1 {
       font-family: var(--pixel);
       font-size: clamp(12px, 2vw, 18px);
-      color: var(--white);
+      color: #1a1a1a;
       text-align: center;
       line-height: 2;
     }
@@ -57,8 +57,8 @@
     .loading-bar-wrap {
       width: 280px;
       height: 14px;
-      border: 2px solid var(--white);
-      background: #111;
+      border: 2px solid #1a1a1a;
+      background: #a0a0a0;
       image-rendering: pixelated;
     }
 
@@ -72,7 +72,7 @@
     .loading-pct {
       font-family: var(--pixel);
       font-size: 9px;
-      color: var(--rose);
+      color: var(--pink);
       letter-spacing: 2px;
     }
 
@@ -94,7 +94,7 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: var(--black);
+      background: #c8c8c8;
       flex-direction: column;
     }
 
@@ -109,14 +109,14 @@
     .game-title {
       font-family: var(--pixel);
       font-size: clamp(10px, 1.5vw, 14px);
-      color: var(--white);
+      color: #1a1a1a;
       letter-spacing: 2px;
     }
 
     .game-subtitle {
       font-family: var(--pixel);
       font-size: clamp(7px, 1vw, 9px);
-      color: var(--rose);
+      color: #555;
       letter-spacing: 1px;
     }
 
@@ -125,7 +125,7 @@
       flex: 1;
       position: relative;
       overflow: hidden;
-      cursor: none;
+      cursor: crosshair;
     }
 
     /* ground */
@@ -256,7 +256,7 @@
       transform: translateX(-50%);
       font-family: var(--pixel);
       font-size: 7px;
-      color: #555;
+      color: #888;
       letter-spacing: 2px;
       white-space: nowrap;
       animation: hint-blink 1.5s steps(2) infinite;
@@ -313,7 +313,7 @@
 
     .star {
       position: absolute;
-      background: white;
+      background: #9b6fd4;
       border-radius: 50%;
       animation: twinkle var(--d) steps(2) infinite var(--delay);
     }
