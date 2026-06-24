@@ -141,7 +141,7 @@
       border-radius: 6px;
       width: min(90vw, 900px);
       flex: 1;
-      max-height: calc(100vh - 110px);
+      max-height: calc(100vh - 170px);
       position: relative;
       overflow: hidden;
       cursor: crosshair;
@@ -383,20 +383,19 @@
 
 <!-- PAGE SHELL -->
 <div id="page-shell">
-  <nav class="site-nav">
-    <span class="nav-logo">NS</span>
+  <div style="width:100%;padding:28px 48px 0;display:flex;justify-content:flex-end;flex-shrink:0;">
     <div class="nav-pill-group">
       <a href="about.html" class="nav-pill">ABOUT</a>
       <a href="portfolio.html" class="nav-pill">PORTFOLIO</a>
       <a href="contact.html" class="nav-pill">CONTACT</a>
     </div>
-  </nav>
+  </div>
+  <div style="font-family:'Press Start 2P',monospace;font-size:clamp(14px,2.2vw,20px);color:#f0ece8;text-align:center;padding:18px 20px 6px;letter-spacing:2px;line-height:1.7;flex-shrink:0;">NATALIE'S STUDIO</div>
+  <div style="font-family:'Press Start 2P',monospace;font-size:clamp(6px,0.9vw,8px);color:#555;text-align:center;letter-spacing:1px;padding-bottom:14px;flex-shrink:0;">side quests, main quests and a few cool projects</div>
 
   <!-- GAME PANEL -->
   <div id="game-panel">
     <div id="game-world">
-      <!-- BIG WATERMARK NAME -->
-      <div style="position:absolute;bottom:90px;left:28px;font-family:'Press Start 2P',monospace;font-size:clamp(36px,7vw,72px);line-height:0.88;color:#e0d8d2;letter-spacing:-2px;pointer-events:none;user-select:none;z-index:1;">NATALIE<br>STUDIO</div>
 
       <!-- FOLDERS -->
       <div class="folder folder-about" id="folder-about" onclick="openPage('about.html')">
