@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalie's Studio</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --pink: #e879a0;
+      --rose: #f4a0bc;
+      --gold: #d4a843;
+      --violet: #9b6fd4;
+      --white: #f0ece8;
+      --pixel: 'Press Start 2P', monospace;
+      --body: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--body);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* LOADING SCREEN */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      gap: 32px;
+    }
+
+    #loading-screen h1 {
+      font-family: var(--pixel);
+      font-size: clamp(12px, 2vw, 18px);
+      color: var(--white);
+      text-align: center;
+      line-height: 2;
+    }
+
+    #loading-screen h1 span {
+      color: var(--pink);
+    }
+
+    .loading-bar-wrap {
+      width: 280px;
+      height: 14px;
+      border: 2px solid var(--white);
+      background: #111;
+      image-rendering: pixelated;
+    }
+
+    .loading-bar-fill {
+      height: 100%;
+      background: var(--pink);
+      width: 0%;
+      transition: width 0.08s linear;
+    }
+
+    .loading-pct {
+      font-family: var(--pixel);
+      font-size: 9px;
+      color: var(--rose);
+      letter-spacing: 2px;
+    }
+
+    /* pixel character for loading */
+    .pixel-char-load {
+      width: 32px;
+      height: 48px;
+      image-rendering: pixelated;
+      animation: idle-bob 0.5s steps(2) infinite;
+    }
+
+    @keyframes idle-bob {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+
+    /* GAME SCREEN */
+    #game-screen {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      flex-direction: column;
+    }
+
+    /* top bar */
+    .game-header {
+      padding: 20px 32px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .game-title {
+      font-family: var(--pixel);
+      font-size: clamp(10px, 1.5vw, 14px);
+      color: var(--white);
+      letter-spacing: 2px;
+    }
+
+    .game-subtitle {
+      font-family: var(--pixel);
+      font-size: clamp(7px, 1vw, 9px);
+      color: var(--rose);
+      letter-spacing: 1px;
+    }
+
+    /* game world */
+    #game-world {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* ground */
+    .ground {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: repeating-linear-gradient(90deg, var(--violet) 0px, var(--violet) 8px, transparent 8px, transparent 16px);
+      opacity: 0.4;
+    }
+
+    /* FOLDERS */
+    .folder {
+      position: absolute;
+      bottom: 83px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .folder:hover { transform: scale(1.05); }
+    .folder.active { animation: folder-pulse 0.3s ease; }
+
+    @keyframes folder-pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .folder-icon {
+      width: 64px;
+      height: 52px;
+      position: relative;
+      image-rendering: pixelated;
+    }
+
+    .folder-tab {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      width: 22px;
+      height: 10px;
+      border-radius: 2px 2px 0 0;
+    }
+
+    .folder-body {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 44px;
+      border-radius: 2px;
+    }
+
+    /* stack effect */
+    .folder-body::before {
+      content: '';
+      position: absolute;
+      inset: 3px -4px -3px 4px;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    .folder-label {
+      font-family: var(--pixel);
+      font-size: 8px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    /* folder colors */
+    .folder-about .folder-tab { background: var(--pink); }
+    .folder-about .folder-body { background: var(--pink); }
+    .folder-about .folder-body::before { background: #b05070; }
+    .folder-about .folder-label { color: var(--pink); }
+
+    .folder-portfolio .folder-tab { background: var(--gold); }
+    .folder-portfolio .folder-body { background: var(--gold); }
+    .folder-portfolio .folder-body::before { background: #a07020; }
+    .folder-portfolio .folder-label { color: var(--gold); }
+
+    .folder-contact .folder-tab { background: var(--violet); }
+    .folder-contact .folder-body { background: var(--violet); }
+    .folder-contact .folder-body::before { background: #6040a0; }
+    .folder-contact .folder-label { color: var(--violet); }
+
+    /* CHARACTER */
+    #character {
+      position: absolute;
+      bottom: 83px;
+      width: 36px;
+      height: 54px;
+      image-rendering: pixelated;
+      transition: left 0.15s linear;
+      z-index: 10;
+    }
+
+    /* pixel art character via CSS */
+    .char-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* walk animation */
+    #character.walking { animation: walk-bounce 0.25s steps(2) infinite; }
+    #character.idle { animation: idle-bounce 0.6s steps(2) infinite; }
+
+    @keyframes walk-bounce {
+      0% { transform: translateY(0) scaleX(var(--face)); }
+      100% { transform: translateY(-3px) scaleX(var(--face)); }
+    }
+
+    @keyframes idle-bounce {
+      0% { transform: translateY(0) scaleX(var(--face)); }
+      100% { transform: translateY(-2px) scaleX(var(--face)); }
+    }
+
+    /* HINT */
+    .hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: #555;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      animation: hint-blink 1.5s steps(2) infinite;
+    }
+
+    @keyframes hint-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    /* PROXIMITY GLOW */
+    .folder.nearby .folder-body {
+      filter: brightness(1.3);
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    /* SPEECH BUBBLE */
+    .speech-bubble {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--pixel);
+      font-size: 7px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--white);
+    }
+
+    .folder.nearby .speech-bubble { opacity: 1; }
+
+    /* stars bg */
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--d) steps(2) infinite var(--delay);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.1; }
+    }
+
+    /* floating particles */
+    .particle {
+      position: absolute;
+      pointer-events: none;
+      font-family: var(--pixel);
+      font-size: 10px;
+      animation: float-up 0.8s ease-out forwards;
+    }
+
+    @keyframes float-up {
+      0% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-40px); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <h1>NATALIE'S<br><span>STUDIO</span></h1>
+  <svg class="pixel-char-load" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg">
+    <!-- head -->
+    <rect x="5" y="0" width="6" height="6" fill="#f4a0bc"/>
+    <!-- hair -->
+    <rect x="4" y="0" width="8" height="2" fill="#2a1a2e"/>
+    <rect x="4" y="2" width="1" height="2" fill="#2a1a2e"/>
+    <rect x="11" y="2" width="1" height="2" fill="#2a1a2e"/>
+    <!-- eyes -->
+    <rect x="6" y="2" width="1" height="1" fill="#2a1a2e"/>
+    <rect x="9" y="2" width="1" height="1" fill="#2a1a2e"/>
+    <!-- body -->
+    <rect x="4" y="6" width="8" height="8" fill="#e879a0"/>
+    <!-- arms -->
+    <rect x="2" y="6" width="2" height="6" fill="#e879a0"/>
+    <rect x="12" y="6" width="2" height="6" fill="#e879a0"/>
+    <!-- legs -->
+    <rect x="4" y="14" width="3" height="6" fill="#9b6fd4"/>
+    <rect x="9" y="14" width="3" height="6" fill="#9b6fd4"/>
+    <!-- shoes -->
+    <rect x="3" y="20" width="4" height="2" fill="#2a1a2e"/>
+    <rect x="9" y="20" width="4" height="2" fill="#2a1a2e"/>
+  </svg>
+  <div class="loading-bar-wrap">
+    <div class="loading-bar-fill" id="load-bar"></div>
+  </div>
+  <div class="loading-pct" id="load-pct">0%</div>
+</div>
+
+<!-- GAME -->
+<div id="game-screen">
+  <div class="game-header">
+    <div class="game-title">NATALIE'S STUDIO</div>
+    <div class="game-subtitle">side quests, main quests and a few cool projects</div>
+  </div>
+
+  <div id="game-world">
+    <div class="stars" id="stars"></div>
+
+    <!-- FOLDERS -->
+    <div class="folder folder-about" id="folder-about" style="left: 20%;" onclick="openPage('about.html')">
+      <div class="folder-icon">
+        <div class="folder-tab"></div>
+        <div class="folder-body"></div>
+      </div>
+      <div class="speech-bubble">About Me</div>
+      <div class="folder-label">ABOUT</div>
+    </div>
+
+    <div class="folder folder-portfolio" id="folder-portfolio" style="left: 50%; transform: translateX(-50%);" onclick="openPage('portfolio.html')">
+      <div class="folder-icon">
+        <div class="folder-tab"></div>
+        <div class="folder-body"></div>
+      </div>
+      <div class="speech-bubble">My Work</div>
+      <div class="folder-label">PORTFOLIO</div>
+    </div>
+
+    <div class="folder folder-contact" id="folder-contact" style="right: 20%;" onclick="openPage('contact.html')">
+      <div class="folder-icon">
+        <div class="folder-tab"></div>
+        <div class="folder-body"></div>
+      </div>
+      <div class="speech-bubble">Say Hello</div>
+      <div class="folder-label">CONTACT</div>
+    </div>
+
+    <!-- CHARACTER -->
+    <div id="character" style="--face: 1;">
+      <svg class="char-svg" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="0" width="6" height="6" fill="#f4a0bc"/>
+        <rect x="4" y="0" width="8" height="2" fill="#2a1a2e"/>
+        <rect x="4" y="2" width="1" height="2" fill="#2a1a2e"/>
+        <rect x="11" y="2" width="1" height="2" fill="#2a1a2e"/>
+        <rect x="6" y="2" width="1" height="1" fill="#2a1a2e"/>
+        <rect x="9" y="2" width="1" height="1" fill="#2a1a2e"/>
+        <rect x="7" y="4" width="2" height="1" fill="#c04060"/>
+        <rect x="4" y="6" width="8" height="8" fill="#e879a0"/>
+        <rect x="2" y="6" width="2" height="6" fill="#e879a0"/>
+        <rect x="12" y="6" width="2" height="6" fill="#e879a0"/>
+        <rect x="5" y="7" width="2" height="2" fill="#f4a0bc"/>
+        <rect x="9" y="7" width="2" height="2" fill="#f4a0bc"/>
+        <rect x="4" y="14" width="3" height="6" fill="#9b6fd4"/>
+        <rect x="9" y="14" width="3" height="6" fill="#9b6fd4"/>
+        <rect x="3" y="20" width="4" height="2" fill="#2a1a2e"/>
+        <rect x="9" y="20" width="4" height="2" fill="#2a1a2e"/>
+      </svg>
+    </div>
+
+    <div class="ground"></div>
+
+    <div class="hint">← CLICK ANYWHERE TO WALK → APPROACH FOLDERS TO EXPLORE</div>
+  </div>
+</div>
+
+<script>
+  // LOADING
+  let pct = 0;
+  const bar = document.getElementById('load-bar');
+  const pctEl = document.getElementById('load-pct');
+  const interval = setInterval(() => {
+    pct += Math.random() * 12 + 4;
+    if (pct >= 100) {
+      pct = 100;
+      clearInterval(interval);
+      setTimeout(startGame, 400);
+    }
+    bar.style.width = pct + '%';
+    pctEl.textContent = Math.floor(pct) + '%';
+  }, 80);
+
+  function startGame() {
+    document.getElementById('loading-screen').style.display = 'none';
+    const gs = document.getElementById('game-screen');
+    gs.style.display = 'flex';
+    buildStars();
+    initGame();
+  }
+
+  // STARS
+  function buildStars() {
+    const container = document.getElementById('stars');
+    for (let i = 0; i < 60; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < 0.7 ? 1 : 2;
+      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*70}%;left:${Math.random()*100}%;--d:${1.5+Math.random()*2}s;--delay:${Math.random()*2}s;`;
+      container.appendChild(s);
+    }
+  }
+
+  // GAME
+  function initGame() {
+    const world = document.getElementById('game-world');
+    const char = document.getElementById('character');
+    const folders = document.querySelectorAll('.folder');
+
+    let charX = window.innerWidth * 0.35;
+    let targetX = charX;
+    let moving = false;
+    let facingRight = true;
+
+    char.style.left = charX + 'px';
+
+    function updateChar() {
+      const diff = targetX - charX;
+      if (Math.abs(diff) > 2) {
+        charX += diff * 0.12;
+        moving = true;
+        facingRight = diff > 0;
+        char.style.setProperty('--face', facingRight ? 1 : -1);
+        char.className = 'walking';
+      } else {
+        charX = targetX;
+        moving = false;
+        char.className = 'idle';
+      }
+      char.style.left = charX + 'px';
+      checkProximity();
+      requestAnimationFrame(updateChar);
+    }
+
+    function checkProximity() {
+      folders.forEach(folder => {
+        const rect = folder.getBoundingClientRect();
+        const folderCenter = rect.left + rect.width / 2;
+        const dist = Math.abs(charX + 18 - folderCenter);
+        if (dist < 80) {
+          folder.classList.add('nearby');
+        } else {
+          folder.classList.remove('nearby');
+        }
+      });
+    }
+
+    world.addEventListener('click', (e) => {
+      const rect = world.getBoundingClientRect();
+      targetX = e.clientX - rect.left - 18;
+      targetX = Math.max(0, Math.min(window.innerWidth - 36, targetX));
+      spawnParticle(e.clientX, e.clientY);
+    });
+
+    requestAnimationFrame(updateChar);
+  }
+
+  function spawnParticle(x, y) {
+    const symbols = ['★', '✦', '♦', '◆', '·'];
+    const colors = ['#e879a0', '#d4a843', '#9b6fd4', '#f4a0bc'];
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    p.style.cssText = `left:${x}px;top:${y}px;color:${colors[Math.floor(Math.random()*colors.length)]};position:fixed;`;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 800);
+  }
+
+  function openPage(page) {
+    window.location.href = page;
+  }
+</script>
+</body>
+</html>
