@@ -10,55 +10,55 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --black: #0a0a0a;
       --pink: #e879a0;
       --rose: #f4a0bc;
       --gold: #d4a843;
       --violet: #9b6fd4;
-      --white: #f0ece8;
       --pixel: 'Press Start 2P', monospace;
       --body: 'Inter', sans-serif;
     }
 
     body {
-      background: #c8c8c8;
-      color: #1a1a1a;
+      background: #0a0a0a;
+      color: #f0ece8;
       font-family: var(--body);
       overflow: hidden;
       height: 100vh;
       width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
     }
 
     /* LOADING SCREEN */
     #loading-screen {
       position: fixed;
       inset: 0;
-      background: #c8c8c8;
+      background: #0a0a0a;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 100;
-      gap: 32px;
+      gap: 28px;
     }
 
     #loading-screen h1 {
       font-family: var(--pixel);
-      font-size: clamp(12px, 2vw, 18px);
-      color: #1a1a1a;
+      font-size: clamp(14px, 2.5vw, 22px);
+      color: #f0ece8;
       text-align: center;
       line-height: 2;
     }
 
-    #loading-screen h1 span {
-      color: var(--pink);
-    }
+    #loading-screen h1 span { color: var(--pink); }
 
     .loading-bar-wrap {
       width: 280px;
       height: 14px;
-      border: 2px solid #1a1a1a;
-      background: #a0a0a0;
+      border: 2px solid #f0ece8;
+      background: #1a1a1a;
       image-rendering: pixelated;
     }
 
@@ -72,108 +72,111 @@
     .loading-pct {
       font-family: var(--pixel);
       font-size: 9px;
-      color: var(--pink);
+      color: var(--rose);
       letter-spacing: 2px;
     }
 
-    /* pixel character for loading */
     .pixel-char-load {
-      width: 32px;
-      height: 48px;
+      width: 48px;
+      height: 72px;
       image-rendering: pixelated;
       animation: idle-bob 0.5s steps(2) infinite;
     }
 
     @keyframes idle-bob {
       0% { transform: translateY(0); }
-      100% { transform: translateY(-4px); }
+      100% { transform: translateY(-5px); }
     }
 
-    /* GAME SCREEN */
-    #game-screen {
+    /* OUTER SHELL - dark page with centered title */
+    #page-shell {
       display: none;
-      position: fixed;
-      inset: 0;
-      background: #c8c8c8;
       flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100vh;
+      background: #0a0a0a;
     }
 
-    /* top bar */
-    .game-header {
-      padding: 20px 32px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .game-title {
+    .page-title {
       font-family: var(--pixel);
-      font-size: clamp(10px, 1.5vw, 14px);
-      color: #1a1a1a;
+      font-size: clamp(18px, 3vw, 28px);
+      color: #f0ece8;
+      text-align: center;
+      padding: 32px 20px 20px;
       letter-spacing: 2px;
+      line-height: 1.6;
     }
 
-    .game-subtitle {
+    .page-subtitle {
       font-family: var(--pixel);
       font-size: clamp(7px, 1vw, 9px);
-      color: #555;
+      color: #666;
+      text-align: center;
       letter-spacing: 1px;
+      padding-bottom: 16px;
     }
 
-    /* game world */
-    #game-world {
+    /* GAME PANEL - white/light inner screen like the reference */
+    #game-panel {
+      background: #f0ece8;
+      border-radius: 4px;
+      width: min(90vw, 900px);
       flex: 1;
+      max-height: calc(100vh - 160px);
       position: relative;
       overflow: hidden;
       cursor: crosshair;
     }
 
-    /* ground */
-    .ground {
+    /* GAME WORLD inside panel */
+    #game-world {
       position: absolute;
-      bottom: 80px;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: repeating-linear-gradient(90deg, var(--violet) 0px, var(--violet) 8px, transparent 8px, transparent 16px);
-      opacity: 0.4;
+      inset: 0;
     }
 
-    /* FOLDERS */
+    /* subtle dot grid on panel bg */
+    #game-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, #ccc 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* FOLDERS - much bigger */
     .folder {
       position: absolute;
-      bottom: 83px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
-      transition: transform 0.1s;
+      transition: transform 0.12s;
+      z-index: 5;
+      user-select: none;
     }
 
-    .folder:hover { transform: scale(1.05); }
-    .folder.active { animation: folder-pulse 0.3s ease; }
-
-    @keyframes folder-pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-      100% { transform: scale(1); }
-    }
+    .folder:hover { transform: scale(1.08); }
 
     .folder-icon {
-      width: 64px;
-      height: 52px;
+      width: 100px;
+      height: 82px;
       position: relative;
       image-rendering: pixelated;
+      filter: drop-shadow(3px 4px 0px rgba(0,0,0,0.25));
     }
 
     .folder-tab {
       position: absolute;
       top: 0;
-      left: 6px;
-      width: 22px;
-      height: 10px;
-      border-radius: 2px 2px 0 0;
+      left: 10px;
+      width: 34px;
+      height: 16px;
+      border-radius: 3px 3px 0 0;
     }
 
     .folder-body {
@@ -181,22 +184,21 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 44px;
-      border-radius: 2px;
+      height: 68px;
+      border-radius: 3px;
     }
 
-    /* stack effect */
     .folder-body::before {
       content: '';
       position: absolute;
-      inset: 3px -4px -3px 4px;
-      border-radius: 2px;
-      opacity: 0.5;
+      inset: 4px -6px -4px 6px;
+      border-radius: 3px;
+      opacity: 0.45;
     }
 
     .folder-label {
       font-family: var(--pixel);
-      font-size: 8px;
+      font-size: 10px;
       letter-spacing: 1px;
       text-align: center;
     }
@@ -204,92 +206,41 @@
     /* folder colors */
     .folder-about .folder-tab { background: var(--pink); }
     .folder-about .folder-body { background: var(--pink); }
-    .folder-about .folder-body::before { background: #b05070; }
+    .folder-about .folder-body::before { background: #b04070; }
     .folder-about .folder-label { color: var(--pink); }
 
     .folder-portfolio .folder-tab { background: var(--gold); }
     .folder-portfolio .folder-body { background: var(--gold); }
-    .folder-portfolio .folder-body::before { background: #a07020; }
-    .folder-portfolio .folder-label { color: var(--gold); }
+    .folder-portfolio .folder-body::before { background: #9a7010; }
+    .folder-portfolio .folder-label { color: #b07800; }
 
     .folder-contact .folder-tab { background: var(--violet); }
     .folder-contact .folder-body { background: var(--violet); }
-    .folder-contact .folder-body::before { background: #6040a0; }
+    .folder-contact .folder-body::before { background: #5a30a0; }
     .folder-contact .folder-label { color: var(--violet); }
-
-    /* CHARACTER */
-    #character {
-      position: absolute;
-      bottom: 83px;
-      width: 36px;
-      height: 54px;
-      image-rendering: pixelated;
-      transition: left 0.15s linear;
-      z-index: 10;
-    }
-
-    /* pixel art character via CSS */
-    .char-svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* walk animation */
-    #character.walking { animation: walk-bounce 0.25s steps(2) infinite; }
-    #character.idle { animation: idle-bounce 0.6s steps(2) infinite; }
-
-    @keyframes walk-bounce {
-      0% { transform: translateY(0) scaleX(var(--face)); }
-      100% { transform: translateY(-3px) scaleX(var(--face)); }
-    }
-
-    @keyframes idle-bounce {
-      0% { transform: translateY(0) scaleX(var(--face)); }
-      100% { transform: translateY(-2px) scaleX(var(--face)); }
-    }
-
-    /* HINT */
-    .hint {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--pixel);
-      font-size: 7px;
-      color: #888;
-      letter-spacing: 2px;
-      white-space: nowrap;
-      animation: hint-blink 1.5s steps(2) infinite;
-    }
-
-    @keyframes hint-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
 
     /* PROXIMITY GLOW */
     .folder.nearby .folder-body {
-      filter: brightness(1.3);
-      box-shadow: 0 0 16px currentColor;
+      filter: brightness(1.2);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     /* SPEECH BUBBLE */
     .speech-bubble {
       position: absolute;
-      bottom: 100%;
+      bottom: calc(100% + 12px);
       left: 50%;
       transform: translateX(-50%);
-      background: var(--white);
-      color: var(--black);
+      background: #1a1a1a;
+      color: #f0ece8;
       font-family: var(--pixel);
-      font-size: 7px;
-      padding: 6px 10px;
+      font-size: 8px;
+      padding: 8px 12px;
       border-radius: 4px;
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s;
-      margin-bottom: 8px;
     }
 
     .speech-bubble::after {
@@ -298,43 +249,88 @@
       top: 100%;
       left: 50%;
       transform: translateX(-50%);
-      border: 5px solid transparent;
-      border-top-color: var(--white);
+      border: 6px solid transparent;
+      border-top-color: #1a1a1a;
     }
 
     .folder.nearby .speech-bubble { opacity: 1; }
 
-    /* stars bg */
-    .stars {
+    /* CHARACTER - bigger, 2D movement */
+    #character {
       position: absolute;
-      inset: 0;
+      width: 56px;
+      height: 84px;
+      image-rendering: pixelated;
+      z-index: 10;
       pointer-events: none;
     }
 
-    .star {
-      position: absolute;
-      background: #9b6fd4;
-      border-radius: 50%;
-      animation: twinkle var(--d) steps(2) infinite var(--delay);
+    .char-svg { width: 100%; height: 100%; }
+
+    #character.walking { animation: walk-bounce 0.22s steps(2) infinite; }
+    #character.idle    { animation: idle-bounce 0.7s steps(2) infinite; }
+
+    @keyframes walk-bounce {
+      0%   { transform: translateY(0) scaleX(var(--face)); }
+      100% { transform: translateY(-4px) scaleX(var(--face)); }
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.6; }
-      50% { opacity: 0.1; }
+    @keyframes idle-bounce {
+      0%   { transform: translateY(0) scaleX(var(--face)); }
+      100% { transform: translateY(-3px) scaleX(var(--face)); }
+    }
+
+    /* HINT */
+    .hint {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--pixel);
+      font-size: 7px;
+      color: #aaa;
+      letter-spacing: 1px;
+      white-space: nowrap;
+      animation: hint-blink 1.8s steps(2) infinite;
+      z-index: 2;
+    }
+
+    @keyframes hint-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
     }
 
     /* floating particles */
     .particle {
-      position: absolute;
+      position: fixed;
       pointer-events: none;
       font-family: var(--pixel);
-      font-size: 10px;
-      animation: float-up 0.8s ease-out forwards;
+      font-size: 12px;
+      animation: float-up 0.9s ease-out forwards;
+      z-index: 999;
     }
 
     @keyframes float-up {
-      0% { opacity: 1; transform: translateY(0); }
-      100% { opacity: 0; transform: translateY(-40px); }
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-50px) scale(0.5); }
+    }
+
+    /* click ripple */
+    .click-ripple {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--pink);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: ripple-out 0.5s ease-out forwards;
+      z-index: 998;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes ripple-out {
+      0%   { opacity: 1; transform: translate(-50%,-50%) scale(0.2); }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(2.5); }
     }
   </style>
 </head>
@@ -344,26 +340,22 @@
 <div id="loading-screen">
   <h1>NATALIE'S<br><span>STUDIO</span></h1>
   <svg class="pixel-char-load" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg">
-    <!-- head -->
     <rect x="5" y="0" width="6" height="6" fill="#f4a0bc"/>
-    <!-- hair -->
     <rect x="4" y="0" width="8" height="2" fill="#2a1a2e"/>
-    <rect x="4" y="2" width="1" height="2" fill="#2a1a2e"/>
-    <rect x="11" y="2" width="1" height="2" fill="#2a1a2e"/>
-    <!-- eyes -->
+    <rect x="4" y="2" width="1" height="3" fill="#2a1a2e"/>
+    <rect x="11" y="2" width="1" height="3" fill="#2a1a2e"/>
     <rect x="6" y="2" width="1" height="1" fill="#2a1a2e"/>
     <rect x="9" y="2" width="1" height="1" fill="#2a1a2e"/>
-    <!-- body -->
-    <rect x="4" y="6" width="8" height="8" fill="#e879a0"/>
-    <!-- arms -->
-    <rect x="2" y="6" width="2" height="6" fill="#e879a0"/>
-    <rect x="12" y="6" width="2" height="6" fill="#e879a0"/>
-    <!-- legs -->
-    <rect x="4" y="14" width="3" height="6" fill="#9b6fd4"/>
-    <rect x="9" y="14" width="3" height="6" fill="#9b6fd4"/>
-    <!-- shoes -->
-    <rect x="3" y="20" width="4" height="2" fill="#2a1a2e"/>
-    <rect x="9" y="20" width="4" height="2" fill="#2a1a2e"/>
+    <rect x="7" y="4" width="2" height="1" fill="#c04060"/>
+    <rect x="4" y="6" width="8" height="9" fill="#e879a0"/>
+    <rect x="2" y="7" width="2" height="6" fill="#e879a0"/>
+    <rect x="12" y="7" width="2" height="6" fill="#e879a0"/>
+    <rect x="5" y="7" width="2" height="2" fill="#f4a0bc"/>
+    <rect x="9" y="7" width="2" height="2" fill="#f4a0bc"/>
+    <rect x="4" y="15" width="3" height="6" fill="#9b6fd4"/>
+    <rect x="9" y="15" width="3" height="6" fill="#9b6fd4"/>
+    <rect x="3" y="21" width="4" height="2" fill="#2a1a2e"/>
+    <rect x="9" y="21" width="4" height="2" fill="#2a1a2e"/>
   </svg>
   <div class="loading-bar-wrap">
     <div class="loading-bar-fill" id="load-bar"></div>
@@ -371,69 +363,94 @@
   <div class="loading-pct" id="load-pct">0%</div>
 </div>
 
-<!-- GAME -->
-<div id="game-screen">
-  <div class="game-header">
-    <div class="game-title">NATALIE'S STUDIO</div>
-    <div class="game-subtitle">side quests, main quests and a few cool projects</div>
-  </div>
+<!-- PAGE SHELL -->
+<div id="page-shell">
+  <div class="page-title">NATALIE'S STUDIO</div>
+  <div class="page-subtitle">side quests, main quests and a few cool projects</div>
 
-  <div id="game-world">
-    <div class="stars" id="stars"></div>
+  <!-- GAME PANEL -->
+  <div id="game-panel">
+    <div id="game-world">
 
-    <!-- FOLDERS -->
-    <div class="folder folder-about" id="folder-about" style="left: 20%;" onclick="openPage('about.html')">
-      <div class="folder-icon">
-        <div class="folder-tab"></div>
-        <div class="folder-body"></div>
+      <!-- FOLDERS -->
+      <div class="folder folder-about" id="folder-about" onclick="openPage('about.html')">
+        <div class="folder-icon">
+          <div class="folder-tab"></div>
+          <div class="folder-body"></div>
+        </div>
+        <div class="speech-bubble">About Me</div>
+        <div class="folder-label">ABOUT</div>
       </div>
-      <div class="speech-bubble">About Me</div>
-      <div class="folder-label">ABOUT</div>
-    </div>
 
-    <div class="folder folder-portfolio" id="folder-portfolio" style="left: 50%; transform: translateX(-50%);" onclick="openPage('portfolio.html')">
-      <div class="folder-icon">
-        <div class="folder-tab"></div>
-        <div class="folder-body"></div>
+      <div class="folder folder-portfolio" id="folder-portfolio" onclick="openPage('portfolio.html')">
+        <div class="folder-icon">
+          <div class="folder-tab"></div>
+          <div class="folder-body"></div>
+        </div>
+        <div class="speech-bubble">My Work</div>
+        <div class="folder-label">PORTFOLIO</div>
       </div>
-      <div class="speech-bubble">My Work</div>
-      <div class="folder-label">PORTFOLIO</div>
-    </div>
 
-    <div class="folder folder-contact" id="folder-contact" style="right: 20%;" onclick="openPage('contact.html')">
-      <div class="folder-icon">
-        <div class="folder-tab"></div>
-        <div class="folder-body"></div>
+      <div class="folder folder-contact" id="folder-contact" onclick="openPage('contact.html')">
+        <div class="folder-icon">
+          <div class="folder-tab"></div>
+          <div class="folder-body"></div>
+        </div>
+        <div class="speech-bubble">Say Hello</div>
+        <div class="folder-label">CONTACT</div>
       </div>
-      <div class="speech-bubble">Say Hello</div>
-      <div class="folder-label">CONTACT</div>
+
+      <!-- CHARACTER -->
+      <div id="character" style="--face: 1;">
+        <svg class="char-svg" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg">
+          <!-- head -->
+          <rect x="5" y="0" width="6" height="6" fill="#f4a0bc"/>
+          <!-- hair top -->
+          <rect x="4" y="0" width="8" height="2" fill="#2a1a2e"/>
+          <!-- hair sides -->
+          <rect x="4" y="2" width="1" height="3" fill="#2a1a2e"/>
+          <rect x="11" y="2" width="1" height="3" fill="#2a1a2e"/>
+          <!-- hair strand top-right -->
+          <rect x="10" y="0" width="1" height="1" fill="#2a1a2e"/>
+          <!-- eyes -->
+          <rect x="6" y="2" width="1" height="1" fill="#2a1a2e"/>
+          <rect x="9" y="2" width="1" height="1" fill="#2a1a2e"/>
+          <!-- blush -->
+          <rect x="5" y="4" width="1" height="1" fill="#ffb0c8"/>
+          <rect x="10" y="4" width="1" height="1" fill="#ffb0c8"/>
+          <!-- mouth -->
+          <rect x="7" y="4" width="2" height="1" fill="#c04060"/>
+          <!-- neck -->
+          <rect x="7" y="6" width="2" height="1" fill="#f4a0bc"/>
+          <!-- body/dress -->
+          <rect x="4" y="7" width="8" height="8" fill="#e879a0"/>
+          <!-- dress highlight -->
+          <rect x="5" y="8" width="2" height="3" fill="#f090b8"/>
+          <!-- arms -->
+          <rect x="2" y="7" width="2" height="7" fill="#f4a0bc"/>
+          <rect x="12" y="7" width="2" height="7" fill="#f4a0bc"/>
+          <!-- hands -->
+          <rect x="2" y="14" width="2" height="1" fill="#e888a8"/>
+          <rect x="12" y="14" width="2" height="1" fill="#e888a8"/>
+          <!-- skirt flare -->
+          <rect x="3" y="13" width="10" height="2" fill="#d060a0"/>
+          <!-- legs -->
+          <rect x="5" y="15" width="2" height="6" fill="#9b6fd4"/>
+          <rect x="9" y="15" width="2" height="6" fill="#9b6fd4"/>
+          <!-- leg highlight -->
+          <rect x="5" y="15" width="1" height="3" fill="#b088e0"/>
+          <rect x="9" y="15" width="1" height="3" fill="#b088e0"/>
+          <!-- shoes -->
+          <rect x="4" y="21" width="4" height="2" fill="#2a1a2e"/>
+          <rect x="9" y="21" width="4" height="2" fill="#2a1a2e"/>
+          <!-- shoe highlight -->
+          <rect x="4" y="21" width="2" height="1" fill="#554466"/>
+          <rect x="9" y="21" width="2" height="1" fill="#554466"/>
+        </svg>
+      </div>
+
+      <div class="hint">CLICK ANYWHERE TO WALK · APPROACH FOLDERS TO EXPLORE</div>
     </div>
-
-    <!-- CHARACTER -->
-    <div id="character" style="--face: 1;">
-      <svg class="char-svg" viewBox="0 0 16 24" xmlns="http://www.w3.org/2000/svg">
-        <rect x="5" y="0" width="6" height="6" fill="#f4a0bc"/>
-        <rect x="4" y="0" width="8" height="2" fill="#2a1a2e"/>
-        <rect x="4" y="2" width="1" height="2" fill="#2a1a2e"/>
-        <rect x="11" y="2" width="1" height="2" fill="#2a1a2e"/>
-        <rect x="6" y="2" width="1" height="1" fill="#2a1a2e"/>
-        <rect x="9" y="2" width="1" height="1" fill="#2a1a2e"/>
-        <rect x="7" y="4" width="2" height="1" fill="#c04060"/>
-        <rect x="4" y="6" width="8" height="8" fill="#e879a0"/>
-        <rect x="2" y="6" width="2" height="6" fill="#e879a0"/>
-        <rect x="12" y="6" width="2" height="6" fill="#e879a0"/>
-        <rect x="5" y="7" width="2" height="2" fill="#f4a0bc"/>
-        <rect x="9" y="7" width="2" height="2" fill="#f4a0bc"/>
-        <rect x="4" y="14" width="3" height="6" fill="#9b6fd4"/>
-        <rect x="9" y="14" width="3" height="6" fill="#9b6fd4"/>
-        <rect x="3" y="20" width="4" height="2" fill="#2a1a2e"/>
-        <rect x="9" y="20" width="4" height="2" fill="#2a1a2e"/>
-      </svg>
-    </div>
-
-    <div class="ground"></div>
-
-    <div class="hint">← CLICK ANYWHERE TO WALK → APPROACH FOLDERS TO EXPLORE</div>
   </div>
 </div>
 
@@ -447,7 +464,7 @@
     if (pct >= 100) {
       pct = 100;
       clearInterval(interval);
-      setTimeout(startGame, 400);
+      setTimeout(startGame, 350);
     }
     bar.style.width = pct + '%';
     pctEl.textContent = Math.floor(pct) + '%';
@@ -455,61 +472,85 @@
 
   function startGame() {
     document.getElementById('loading-screen').style.display = 'none';
-    const gs = document.getElementById('game-screen');
-    gs.style.display = 'flex';
-    buildStars();
+    const shell = document.getElementById('page-shell');
+    shell.style.display = 'flex';
     initGame();
   }
 
-  // STARS
-  function buildStars() {
-    const container = document.getElementById('stars');
-    for (let i = 0; i < 60; i++) {
-      const s = document.createElement('div');
-      s.className = 'star';
-      const size = Math.random() < 0.7 ? 1 : 2;
-      s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*70}%;left:${Math.random()*100}%;--d:${1.5+Math.random()*2}s;--delay:${Math.random()*2}s;`;
-      container.appendChild(s);
-    }
-  }
-
-  // GAME
+  // GAME - full 2D movement
   function initGame() {
-    const world = document.getElementById('game-world');
-    const char = document.getElementById('character');
+    const panel  = document.getElementById('game-panel');
+    const world  = document.getElementById('game-world');
+    const char   = document.getElementById('character');
     const folders = document.querySelectorAll('.folder');
 
-    let charX = window.innerWidth * 0.35;
+    const CW = 56, CH = 84; // character size
+
+    // place folders in panel-relative positions (set after panel renders)
+    function layoutFolders() {
+      const pw = panel.offsetWidth;
+      const ph = panel.offsetHeight;
+      const FW = 100, FH = 110; // folder approx size
+
+      // about: left quarter, vertical center-ish
+      setFolder('folder-about',     pw * 0.18, ph * 0.5);
+      // portfolio: center, higher up
+      setFolder('folder-portfolio', pw * 0.5 - FW/2, ph * 0.35);
+      // contact: right quarter, lower
+      setFolder('folder-contact',   pw * 0.75, ph * 0.58);
+    }
+
+    function setFolder(id, x, y) {
+      const el = document.getElementById(id);
+      el.style.left = x + 'px';
+      el.style.top  = y + 'px';
+    }
+
+    layoutFolders();
+    window.addEventListener('resize', layoutFolders);
+
+    // character start position
+    let charX = panel.offsetWidth  * 0.45;
+    let charY = panel.offsetHeight * 0.6;
     let targetX = charX;
-    let moving = false;
+    let targetY = charY;
     let facingRight = true;
 
     char.style.left = charX + 'px';
+    char.style.top  = charY + 'px';
 
     function updateChar() {
-      const diff = targetX - charX;
-      if (Math.abs(diff) > 2) {
-        charX += diff * 0.12;
-        moving = true;
-        facingRight = diff > 0;
+      const dx = targetX - charX;
+      const dy = targetY - charY;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+
+      if (dist > 2) {
+        const speed = 0.11;
+        charX += dx * speed;
+        charY += dy * speed;
+        facingRight = dx > 0;
         char.style.setProperty('--face', facingRight ? 1 : -1);
         char.className = 'walking';
       } else {
         charX = targetX;
-        moving = false;
+        charY = targetY;
         char.className = 'idle';
       }
+
       char.style.left = charX + 'px';
+      char.style.top  = charY + 'px';
       checkProximity();
       requestAnimationFrame(updateChar);
     }
 
     function checkProximity() {
+      const charCX = charX + CW / 2;
+      const charCY = charY + CH / 2;
       folders.forEach(folder => {
-        const rect = folder.getBoundingClientRect();
-        const folderCenter = rect.left + rect.width / 2;
-        const dist = Math.abs(charX + 18 - folderCenter);
-        if (dist < 80) {
+        const fx = parseFloat(folder.style.left) + 50;  // folder center X
+        const fy = parseFloat(folder.style.top)  + 55;  // folder center Y
+        const dist = Math.sqrt((charCX - fx)**2 + (charCY - fy)**2);
+        if (dist < 110) {
           folder.classList.add('nearby');
         } else {
           folder.classList.remove('nearby');
@@ -517,25 +558,39 @@
       });
     }
 
-    world.addEventListener('click', (e) => {
-      const rect = world.getBoundingClientRect();
-      targetX = e.clientX - rect.left - 18;
-      targetX = Math.max(0, Math.min(window.innerWidth - 36, targetX));
+    panel.addEventListener('click', (e) => {
+      const rect = panel.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      // clamp so character stays inside panel
+      targetX = Math.max(0, Math.min(panel.offsetWidth  - CW, clickX - CW/2));
+      targetY = Math.max(0, Math.min(panel.offsetHeight - CH, clickY - CH/2));
+
       spawnParticle(e.clientX, e.clientY);
+      spawnRipple(e.clientX, e.clientY);
     });
 
     requestAnimationFrame(updateChar);
   }
 
   function spawnParticle(x, y) {
-    const symbols = ['★', '✦', '♦', '◆', '·'];
-    const colors = ['#e879a0', '#d4a843', '#9b6fd4', '#f4a0bc'];
+    const symbols = ['★', '✦', '♦', '◆', '·', '✿'];
+    const colors  = ['#e879a0', '#d4a843', '#9b6fd4', '#f4a0bc'];
     const p = document.createElement('div');
     p.className = 'particle';
     p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-    p.style.cssText = `left:${x}px;top:${y}px;color:${colors[Math.floor(Math.random()*colors.length)]};position:fixed;`;
+    p.style.cssText = `left:${x}px;top:${y}px;color:${colors[Math.floor(Math.random()*colors.length)]};`;
     document.body.appendChild(p);
-    setTimeout(() => p.remove(), 800);
+    setTimeout(() => p.remove(), 900);
+  }
+
+  function spawnRipple(x, y) {
+    const r = document.createElement('div');
+    r.className = 'click-ripple';
+    r.style.cssText = `left:${x}px;top:${y}px;`;
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 500);
   }
 
   function openPage(page) {
