@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio — Natalie's Studio</title>
+  <title>Portfolio - Natalie's Studio</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,7 +80,7 @@
     .big-name {
       font-family: var(--pixel);
       /* 38% of min(92vw,960px) minus padding = ~320px at desktop.
-         "COLLECTION" in Press Start 2P is ~10 chars × ~0.65em wide each.
+         "COLLECTION" in Press Start 2P is ~10 chars x ~0.65em wide each.
          At 28px that's ~182px. Safe. Use clamp so it grows but never breaks. */
       font-size: clamp(18px, 3vw, 32px);
       line-height: 1.15;
@@ -171,10 +171,22 @@
     .card-3 .card-num, .card-3 .card-link { color: var(--rose); }
     .card-3 .card-title, .card-3 .card-desc { color: #f0ece8; }
 
-    .vinyl-card[data-pos="0"] { transform: translate(0,0) rotate(0deg); z-index: 4; box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
-    .vinyl-card[data-pos="1"] { transform: translate(10px,10px) rotate(3deg); z-index: 3; opacity: 0.85; }
-    .vinyl-card[data-pos="2"] { transform: translate(20px,20px) rotate(5deg); z-index: 2; opacity: 0.65; }
-    .vinyl-card[data-pos="3"] { transform: translate(30px,30px) rotate(7deg); z-index: 1; opacity: 0.45; }
+    .card-4 { background: #0a0e18; }
+    .card-4 .card-bg { background: radial-gradient(ellipse at top right, #1e2f4e 0%, #0a0e18 60%); }
+    .card-4 .card-num, .card-4 .card-link { color: #6d8cc4; }
+    .card-4 .card-title, .card-4 .card-desc { color: #f0ece8; }
+
+    .card-5 { background: #0a1216; }
+    .card-5 .card-bg { background: radial-gradient(ellipse at bottom left, #16323d 0%, #0a1216 60%); }
+    .card-5 .card-num, .card-5 .card-link { color: #4fc3d9; }
+    .card-5 .card-title, .card-5 .card-desc { color: #f0ece8; }
+
+    .vinyl-card[data-pos="0"] { transform: translate(0,0) rotate(0deg); z-index: 6; box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+    .vinyl-card[data-pos="1"] { transform: translate(10px,10px) rotate(3deg); z-index: 5; opacity: 0.85; }
+    .vinyl-card[data-pos="2"] { transform: translate(20px,20px) rotate(5deg); z-index: 4; opacity: 0.65; }
+    .vinyl-card[data-pos="3"] { transform: translate(30px,30px) rotate(7deg); z-index: 3; opacity: 0.45; }
+    .vinyl-card[data-pos="4"] { transform: translate(40px,40px) rotate(9deg); z-index: 2; opacity: 0.25; }
+    .vinyl-card[data-pos="5"] { transform: translate(50px,50px) rotate(11deg); z-index: 1; opacity: 0.1; }
 
     .vinyl-disc {
       position: absolute; top: 14px; right: 14px; width: 56px; height: 56px;
@@ -195,7 +207,7 @@
       border-radius: 4px; transition: all 0.15s; letter-spacing: 1px;
     }
     .ctrl-btn:hover { border-color: var(--pink); color: var(--pink); }
-    .ctrl-dots { display: flex; gap: 7px; }
+    .ctrl-dots { display: flex; gap: 7px; flex-wrap: wrap; justify-content: center; max-width: 90px; }
     .ctrl-dot { width: 6px; height: 6px; background: #666; border-radius: 50%; cursor: pointer; transition: background 0.2s; }
     .ctrl-dot.active { background: var(--pink); }
 
@@ -270,7 +282,7 @@
               <div class="card-num">01 / BRAND + WEB</div>
               <div class="card-title">ROCKETS.JO</div>
               <div class="card-desc">Thrifted sneaker brand delivering pre-loved kicks across Jordan. Deep burgundy identity, Instagram-first.</div>
-              <a href="https://rocketsjo.store" target="_blank" class="card-link">VISIT SITE →</a>
+              <a href="https://rocketsjo.store" target="_blank" class="card-link">VISIT SITE &rarr;</a>
             </div>
           </div>
         </div>
@@ -282,7 +294,7 @@
               <div class="card-num">02 / BRAND + WEB</div>
               <div class="card-title">CHARMLY.JO</div>
               <div class="card-desc">Charm bracelet and jewelry brand with a full multi-page site. Pink, rose, gold, and violet palette.</div>
-              <a href="https://charmlyjo.netlify.app" target="_blank" class="card-link">VISIT SITE →</a>
+              <a href="https://charmlyjo.netlify.app" target="_blank" class="card-link">VISIT SITE &rarr;</a>
             </div>
           </div>
         </div>
@@ -294,7 +306,7 @@
               <div class="card-num">03 / BRAND + WEB</div>
               <div class="card-title">WARSHA STUDIO</div>
               <div class="card-desc">Creative workshops in Amman hosting craft sessions across venues and cafes. Branding and web.</div>
-              <a href="https://warshastudio.online" target="_blank" class="card-link">VISIT SITE →</a>
+              <a href="https://warshastudio.online" target="_blank" class="card-link">VISIT SITE &rarr;</a>
             </div>
           </div>
         </div>
@@ -303,10 +315,34 @@
           <div class="card-inner">
             <div class="card-bg"></div>
             <div class="card-content">
-              <div class="card-num">04 / COMING SOON</div>
+              <div class="card-num">04 / BRAND + WEB</div>
+              <div class="card-title">B'S WEAR</div>
+              <div class="card-desc">Jordanian activewear and smart-casual clothing store, built on Shopify with a navy and red identity.</div>
+              <a href="https://bswearofficial.com" target="_blank" class="card-link">VISIT SITE &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="vinyl-card card-4" data-pos="4" onclick="cycleStack()">
+          <div class="card-inner">
+            <div class="card-bg"></div>
+            <div class="card-content">
+              <div class="card-num">05 / BRAND + WEB</div>
+              <div class="card-title">SNKRS HUB</div>
+              <div class="card-desc">Women's sneaker store for the Jordan market, built on Shopify with EU sizing and WhatsApp order confirmation.</div>
+              <a href="https://snkrshubjo.com" target="_blank" class="card-link">VISIT SITE &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="vinyl-card card-5" data-pos="5" onclick="cycleStack()">
+          <div class="card-inner">
+            <div class="card-bg"></div>
+            <div class="card-content">
+              <div class="card-num">06 / COMING SOON</div>
               <div class="card-title">NEXT PROJECT</div>
               <div class="card-desc">Something new is in the works. Reach out if you want to be part of it.</div>
-              <a href="contact.html" class="card-link">LET'S TALK →</a>
+              <a href="contact.html" class="card-link">LET'S TALK &rarr;</a>
             </div>
           </div>
         </div>
@@ -314,14 +350,16 @@
       </div>
 
       <div class="vinyl-controls">
-        <button class="ctrl-btn" onclick="cycleBack()">← PREV</button>
+        <button class="ctrl-btn" onclick="cycleBack()">&larr; PREV</button>
         <div class="ctrl-dots" id="dots">
           <div class="ctrl-dot active" onclick="goTo(0)"></div>
           <div class="ctrl-dot" onclick="goTo(1)"></div>
           <div class="ctrl-dot" onclick="goTo(2)"></div>
           <div class="ctrl-dot" onclick="goTo(3)"></div>
+          <div class="ctrl-dot" onclick="goTo(4)"></div>
+          <div class="ctrl-dot" onclick="goTo(5)"></div>
         </div>
-        <button class="ctrl-btn" onclick="cycleStack()">NEXT →</button>
+        <button class="ctrl-btn" onclick="cycleStack()">NEXT &rarr;</button>
       </div>
     </div>
   </div>
@@ -330,7 +368,7 @@
 
 <script>
   let current = 0;
-  const total = 4;
+  const total = 6;
   const cards = Array.from(document.querySelectorAll('.vinyl-card'));
   const dots = Array.from(document.querySelectorAll('.ctrl-dot'));
   function updatePositions() {
