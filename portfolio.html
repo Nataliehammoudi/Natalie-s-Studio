@@ -4,8 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio - Natalie's Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@300;400;500;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --pink: #e879a0; --rose: #f4a0bc; --gold: #d4a843; --violet: #9b6fd4;
@@ -309,10 +311,10 @@
           <div class="card-inner">
             <div class="card-bg"></div>
             <div class="card-content">
-              <div class="card-num">04 / BRAND + WEB</div>
-              <div class="card-title">CHARMLY.JO</div>
-              <div class="card-desc">Charm bracelet and jewelry brand with a full multi-page site. Pink, rose, gold, and violet palette.</div>
-              <a href="https://charmlyjo.netlify.app" target="_blank" class="card-link">VISIT SITE &rarr;</a>
+              <div class="card-num">04 / EVENT + WEB</div>
+              <div class="card-title">MUNTALIQ</div>
+              <div class="card-desc">The Arab Summit for Digital Economy Skills in Amman. Hands-on tracks in affiliate marketing, e-commerce, AI, and sales, with certificates and real income skills to take home.</div>
+              <a href="https://www.mountaliq.com/en" target="_blank" class="card-link">VISIT SITE &rarr;</a>
             </div>
           </div>
         </div>
@@ -359,6 +361,12 @@
   function cycleStack() { current = (current + 1) % total; updatePositions(); }
   function cycleBack() { current = (current - 1 + total) % total; updatePositions(); }
   function goTo(i) { current = i; updatePositions(); }
+
+  document.addEventListener('visibilitychange', () => {
+    document.querySelectorAll('.vinyl-disc').forEach(d => {
+      d.style.animationPlayState = document.hidden ? 'paused' : 'running';
+    });
+  });
 </script>
 </body>
 </html>
