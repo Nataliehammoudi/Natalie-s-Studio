@@ -367,6 +367,18 @@
       d.style.animationPlayState = document.hidden ? 'paused' : 'running';
     });
   });
+
+  // Safari's back-forward cache sometimes restores the page without
+  // redrawing custom-font text (buttons, titles) and leaves stale
+  // animation state, which shows up as blank text and lag.
+  // Forcing a reflow on restore fixes both.
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      document.body.style.display = 'none';
+      void document.body.offsetHeight;
+      document.body.style.display = '';
+    }
+  });
 </script>
 </body>
 </html>
